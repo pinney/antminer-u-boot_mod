@@ -1,8 +1,6 @@
-Forked from pepe2k's u-boot_mod @ commit 056fbad307bd67b62e7141f6b5e2ab68752f8972
-
 U-Boot 1.1.4 modification for Antminer S1 & S3
+Forked from pepe2k's u-boot_mod @ commit 056fbad307bd67b62e7141f6b5e2ab68752f8972
 ==========
-
 
 Supported devices
 -----------------
@@ -22,7 +20,8 @@ Currently supported devices:
   - D-Link DIR-505 H/W ver. A1
 
 I tested this uboot along with OpenWrt trunk firmware on my S1.
-Flashing the bootloader is risky. If you like large expensive bricks proceed without caution.
+Flashing the bootloader is risky.
+If you like large expensive bricks proceed without caution.
 
 More information about supported devices:
 
@@ -41,7 +40,7 @@ More information about supported devices:
 
 Known issues
 ------------
-
+NONE
 
 Modifications, changes
 ----------------------
@@ -132,8 +131,6 @@ Currently supported FLASH types:
 
 (*) tested
 
-If you want to use other type, please contact with me or make changes in the code, test them and send a pull request or a patch.
-
 How to install it?
 ------------------
 
@@ -142,7 +139,8 @@ How to install it?
 **You do so at your own risk!**   
 **If you make any mistake or something goes wrong during upgrade, in worst case, your router will not boot again!**
 
-It is a good practice to backup your original U-Boot image/partition **before** you make any changes. For example, using OpenWrt (TP-Link TL-WR703N with 16 MiB FLASH):
+It is a good practice to backup your original U-Boot image/partition **before** you make any changes.
+For example, using OpenWrt (TP-Link TL-WR703N with 16 MiB FLASH):
 
 ```
 cat /proc/mtd
@@ -160,7 +158,8 @@ mtd4: 00010000 00010000 "art"
 mtd5: 00fd0000 00010000 "firmware"
 ```
 
-As you can see, `u-boot` partition size is **0x20000** (128 KiB) and my image for this model has size of **0x10000** (64 KiB) - it is a very important difference! You should remember about this if you want to use `mtd` utility, to change U-Boot.
+As you can see, `u-boot` partition size is **0x20000** (128 KiB) and my image for this model has size of **0x10000** (64 KiB) - it is a very important difference! 
+You should remember about this if you want to use `mtd` utility, to change U-Boot.
 
 To backup `u-boot` partition in RAM, run:
 
