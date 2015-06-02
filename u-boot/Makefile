@@ -321,6 +321,17 @@ hornet_common_config : common_config
 	@echo "#define CONFIG_MACH_HORNET                   1" >> include/config.h
 	@echo "#define CONFIG_HORNET_1_1_WAR                1" >> include/config.h
 
+antminer_config : unconfig hornet_common_config
+	@/bin/echo -e '\e[32m> Configuring for Bitmain Antminer at:' `date` '\e[0m'
+	@echo "#define CONFIG_FOR_ANTMINER                 1" >> include/config.h
+	@echo "#define GPIO_SYS_LED_BIT                    23" >> include/config.h
+	@echo "#define GPIO_SYS_LED_ON                      1" >> include/config.h
+	@echo "#define GPIO_RST_BUTTON_BIT                 11" >> include/config.h
+	@echo "#define DEFAULT_FLASH_SIZE_IN_MB             8" >> include/config.h
+	@echo "#define BOARD_CUSTOM_STRING                  \"AP121 (AR9331) U-Boot for ANTMINER\"" >> include/config.h
+
+	@./mkconfig -a ap121 mips mips ap121 ar7240 ar7240
+
 wr703n_config : unconfig hornet_common_config
 	@/bin/echo -e '\e[32m> Configuring for TP-Link TL-WR703N at:' `date` '\e[0m'
 	@echo "#define CONFIG_FOR_TPLINK_WR703N_V1          1" >> include/config.h
