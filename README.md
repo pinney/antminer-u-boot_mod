@@ -1,50 +1,8 @@
-U-Boot 1.1.4 modification for routers
+Forked from pepe2k's u-boot_mod @ commit 056fbad307bd67b62e7141f6b5e2ab68752f8972
+
+U-Boot 1.1.4 modification for Antminer S1 & S3
 ==========
 
-Table of contents
------------------
-
-[README w języku polskim/README in Polish language](https://github.com/pepe2k/u-boot_mod/blob/master/READMEPL.md)
-
-- [Introduction](#introduction)
-- [Supported devices](#supported-devices)
-- [Known issues](#known-issues)
-- [Modifications, changes](#modifications-changes)
-	- [Web server](#web-server)
-	- [Network Console](#network-console)
-	- [Other](#other)
-	- [Supported FLASH chips](#supported-flash-chips)
-- [How to install it?](#how-to-install-it)
-	- [Cautions, backups](#cautions-backups)
-	- [Using external programmer](#using-external-programmer)
-	- [Using UART, U-Boot console and TFTP server](#using-uart-u-boot-console-and-tftp-server)
-		- [Important notice!](#important-notice)
-		- [Step by step instruction](#step-by-step-instruction)
-	- [Using OpenWrt](#using-openwrt)
-	- [Using DD-WRT](#using-dd-wrt)
-- [How to use it?](#how-to-use-it)
-- [How to compile the code?](#how-to-compile-the-code)
-- [FAQ](#faq)
-- [License, outdated sources etc.](#license-outdated-sources-etc)
-- [Credits](#credits)
-
-Introduction
-------------
-
-In short, this project is a deep modification of **U-Boot 1.1.4** sources, mostly from **TP-Link**, but some code fragments were taken also from **D-Link**.
-
-You can download original sources from the following pages:
-
-- [TP-Link GPL Code Center](http://www.tp-link.com/en/support/gpl/ "TP-Link GPL Code Center")
-- [D-Link GPL Source Code Support](http://tsd.dlink.com.tw/GPL.asp "D-Link GPL Source Code Support")
-
-The concept for this project came from another U-Boot modification, dedicated to a small and very popular TP-Link router - model **TL-WR703N**, which includes web fail safe mode: **[wr703n-uboot-with-web-failsafe](http://code.google.com/p/wr703n-uboot-with-web-failsafe/)**. I was using it and decided to make my own version, which could have some improvements, additional capabilities, support for different models and work with all modern web browsers.
-
-First version of this modification was introduced on **OpenWrt** forum in [this thread](https://forum.openwrt.org/viewtopic.php?id=43237), at the end of March 2013 and was dedicated only for TP-Link routers with **Atheros AR9331** SoC. Now, it supports also models from different manufacturers, devices with **Atheros AR934x** (like **TP-Link TL-WDR3600**, **TL-WDR43x0**, **TL-WR841N/D v8**, **TL-WA830RE v2**) and other (in the near future **Qualcomm Atheros QCA955x**) are under development.
-
-You can find some information about previous versions of this project also on my [blog](http://www.tech-blog.pl), in [this article](http://www.tech-blog.pl/2013/03/29/zmodyfikowany-u-boot-dla-routerow-tp-link-z-atheros-ar9331-z-trybem-aktualizacji-oprogramowania-przez-www-i-konsola-sieciowa-netconsole/). It is in Polish, but [Google Translator](http://translate.google.com/translate?hl=pl&sl=pl&tl=en&u=http%3A%2F%2Fwww.tech-blog.pl%2F2013%2F03%2F29%2Fzmodyfikowany-u-boot-dla-routerow-tp-link-z-atheros-ar9331-z-trybem-aktualizacji-oprogramowania-przez-www-i-konsola-sieciowa-netconsole%2F&sandbox=1) will help you to understand it.
-
-If you like this project, you may [buy me a beer](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FN3XW36YHSY2S&lc=US&item_name=For%20a%20great%20job%21&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted)!
 
 Supported devices
 -----------------
@@ -52,62 +10,29 @@ Supported devices
 Currently supported devices:
 
 - **Atheros AR9331**:
-  - 8devices Carambola 2 (for version with development board, [photos in my gallery](http://galeria.tech-blog.pl/8devices_Carambola_2/))
-  - TP-Link TL-MR3020 v1 ([photos in my gallery](http://galeria.tech-blog.pl/TPLINK_TL-MR3020/))
-  - TP-Link TL-MR3040 v1 and v2
-  - TP-Link TL-WR703N v1, ([photos in my gallery](http://galeria.tech-blog.pl/TPLINK_TL-WR703N/))
+  - Bitmain Antminer S1 and S3
+  - GS-Oolite/Elink EL-M150 module
+  - TP-Link TL-WR703N v1
   - TP-Link TL-WR720N v3 (version for Chinese market)
-  - TP-Link TL-WR710N v1 (version for European market, [photos in my gallery](http://galeria.tech-blog.pl/TP-Link_TL-WR710N-EU/))
-  - TP-Link TL-MR10U v1 ([photos in my gallery](http://galeria.tech-blog.pl/TP-Link_TL-MR10U/))
-  - TP-Link TL-MR13U v1
+  - TP-Link TL-WR710N v1 (version for European market
   - TP-Link TL-WR740N v4 (and similar, like TL-WR741ND v4)
-  - TP-Link TL-MR3220 v2
-  - GS-Oolite/Elink EL-M150 module with dev board ([photos in my gallery](http://galeria.tech-blog.pl/Elink_EL-M150_Development-Board/))
-  - Dragino 2 (MS14)
-  - Village Telco Mesh Potato 2 (based on Dragino MS14)
-  - GL.iNet 64xxA ([photos in my gallery](http://galeria.tech-blog.pl/GLiNet/))
+	The Antminer shipped with hacked code from OpenWrt based on the WR741ND v4 and WR743ND
 
 - **Atheros AR1311 (similar to AR9331)**
-  - D-Link DIR-505 H/W ver. A1 ([photos in my gallery](http://galeria.tech-blog.pl/D-Link_DIR-505/))
+  - D-Link DIR-505 H/W ver. A1
 
-- **Atheros AR9341**:
-  - TP-Link TL-MR3420 v2
-  - TP-Link TL-WR841N/D v8
-  - TP-Link TL-WA830RE v2
-  - TP-Link TL-WA801ND v2
-
-- **Atheros AR9344**:
-  - TP-Link TL-WDR3600 v1
-  - TP-Link TL-WDR43x0 v1
-  - TP-Link TL-WDR3500 v1
-
-I tested this modification on most of these devices, with OpenWrt and OFW firmware. If you are not sure about the version of your device, please contact with me **before** you try to make an upgrade. Changing bootloader to a wrong version will probably damage your router and you will need special hardware to fix it, so please, **be very careful**.
+I tested this uboot along with OpenWrt trunk firmware on my S1.
+Flashing the bootloader is risky. If you like large expensive bricks proceed without caution.
 
 More information about supported devices:
 
 | Model | SoC | FLASH | RAM | U-Boot image | U-Boot env |
 |:--- | :--- | ---: | ---: | ---: | ---: |
-| [8devices Carambola 2](http://8devices.com/carambola-2) | AR9331 | 16 MiB | 64 MiB DDR2 | 256 KiB | 64 KiB, R/W |
-| [TP-Link TL-MR3020 v1](http://wiki.openwrt.org/toh/tp-link/tl-mr3020) | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
-| [TP-Link TL-MR3040 v1/2](http://wiki.openwrt.org/toh/tp-link/tl-mr3040) | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
 | [TP-Link TL-WR703N](http://wiki.openwrt.org/toh/tp-link/tl-wr703n) | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
 | [TP-Link TL-WR720N v3](http://wiki.openwrt.org/toh/tp-link/tl-wr720n) | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
 | [TP-Link TL-WR710N v1](http://wiki.openwrt.org/toh/tp-link/tl-wr710n) | AR9331 | 8 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
-| [TP-Link TL-MR10U v1](http://wiki.openwrt.org/toh/tp-link/tl-mr10u) | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
-| [TP-Link TL-MR13U v1](http://wiki.openwrt.org/toh/tp-link/tl-mr13u) | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
 | [TP-Link TL-WR740N v4](http://wiki.openwrt.org/toh/tp-link/tl-wr740n) | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
-| [TP-Link TL-MR3220 v2](http://wiki.openwrt.org/toh/tp-link/tl-mr3420) | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
 | GS-Oolite/Elink EL-M150 module | AR9331 | 4/8/16 MiB | 64 MiB DDR2 | 64 KiB, LZMA | RO |
-| [Dragino 2 (MS14)](http://wiki.openwrt.org/toh/dragino/ms14) | AR9331 | 16 MiB | 64 MiB DDR1 | 192 KiB | R/W |
-| Village Telco Mesh Potato 2 | AR9331 | 16 MiB | 64 MiB DDR1 | 192 KiB | R/W |
-| [GL.iNet](http://wiki.openwrt.org/toh/gl-inet/gl-inet) | AR9331 | 8/16 MiB | 64 MiB DDR1 | 64 KiB | RO |
-| [TP-Link TL-MR3420 v2](http://wikidevi.com/wiki/TP-LINK_TL-MR3420_v2) | AR9341 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
-| [TP-Link TL-WR841N/D v8](http://wiki.openwrt.org/toh/tp-link/tl-wr841nd) | AR9341 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
-| [TP-Link TL-WA830RE v2](http://wikidevi.com/wiki/TP-LINK_TL-WA830RE_v2) | AR9341 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
-| [TP-Link TL-WA801ND v2](http://wikidevi.com/wiki/TP-LINK_TL-WA801ND_v2) | AR9341 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
-| [TP-Link TL-WDR3600 v1](http://wiki.openwrt.org/toh/tp-link/tl-wdr3600) | AR9344 | 8 MiB | 128 MiB DDR2 | 64 KiB, LZMA | RO |
-| [TP-Link TL-WDR43x0 v1](http://wiki.openwrt.org/toh/tp-link/tl-wdr4300) | AR9344 | 8 MiB | 128 MiB DDR2 | 64 KiB, LZMA | RO |
-| [TP-Link TL-WDR3500 v1](http://wiki.openwrt.org/toh/tp-link/tl-wdr3500) | AR9344 | 8 MiB | 128 MiB DDR2 | 64 KiB, LZMA | RO |
 | [D-Link DIR-505 H/W ver. A1](http://wiki.openwrt.org/toh/d-link/dir-505) | AR1311 | 8 MiB | 64 MiB DDR2 | 64 KiB, LZMA | RO |
 
 *(LZMA) - U-Boot binary image is compressed with LZMA.*  
@@ -117,7 +42,6 @@ More information about supported devices:
 Known issues
 ------------
 
-Current release is not loading kernel from some versions of TP-Link's official firmware. If you want to use the so-called OFW in any of supported TP-Link's router, do not use this modification. I am working on a solution for this issue.
 
 Modifications, changes
 ----------------------
@@ -136,15 +60,11 @@ Web server contains 7 pages:
 6. fail.html
 7. style.css
 
-![](http://www.tech-blog.pl/wordpress/wp-content/uploads/2013/08/uboot_mod_firmware_upgrade.jpg)
-
 ### Network Console
 
 Second, very useful modification is a network console (it is a part of original U-Boot sources, but none of the manufacturers included it). It allows you to communicate with U-Boot console over the Ethernet, using UDP protocol (default UDP port: 6666, router IP: 192.168.1.1).
 
-![](http://www.tech-blog.pl/wordpress/wp-content/uploads/2013/04/u-boot_mod_for_tp-link_with_ar9331_netconsole.jpg)
-
-You could also use netcat instead of Hercules utility on Mac/Linux:
+Use netcat in Linux:
 ```
 # nc -u -p 6666 192.168.1.1 6666
 ```
@@ -222,7 +142,7 @@ How to install it?
 **You do so at your own risk!**   
 **If you make any mistake or something goes wrong during upgrade, in worst case, your router will not boot again!**
 
-It is a good practice to backup your original U-Boot image/partition (especially for TP-Link devices) **before** you make any changes. For example, using OpenWrt (TP-Link TL-WR703N with 16 MiB FLASH):
+It is a good practice to backup your original U-Boot image/partition **before** you make any changes. For example, using OpenWrt (TP-Link TL-WR703N with 16 MiB FLASH):
 
 ```
 cat /proc/mtd
@@ -281,19 +201,16 @@ Please, **do not** connect any RS232 +/- 12 V cable or any adapter without logic
 
 For a long time I have been using without any problems a small and very cheap (about 1-2 USD) **CP2102** based adapter. Go to [Serial Console article in OpenWrt Wiki](http://wiki.openwrt.org/doc/hardware/port.serial) for more, detailed information.
 
-#### Step by step instruction
+#### Step by step instruction for Linux users.
 
-1. Install and configure any **TFTP server** on your PC (on Windows, you can use [TFTP32](http://tftpd32.jounin.net)).
+1. Install and configure a TFTP server 
 
 2. Set a fixed IP address on your PC (in this tutorial we will use **192.168.1.2** for the PC and **192.168.1.1** for the router) and connect it to the router, using RJ45 network cable (in most case you will need to use one of the available LAN ports, but WAN port should also work).
 
-3. Connect USB to UART adapter to the router and start any application to communicate with it, like [PuTTY](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html).   
-Configure adapter to use the following settings:
-  * Baud rate: 115200
-  * Data bits: 8
-  * Parity control: none
-  * Stop bits: 1
-  * Handshaking: none
+3. Connect USB to UART adapter to the router.
+
+user$ screen /dev/ttyUSB0 115200  
+
 4. Power on the router, wait for a line like one of the following and interrupt the process of loading a kernel:
 
   `Autobooting in 1 seconds` (for most **TP-Link** routers, you should enter `tpl` at this point)   
@@ -340,7 +257,7 @@ Configure adapter to use the following settings:
 9. Erase appropriate FLASH space for new U-Boot image (this command will remove default U-Boot image!):
 
   ```
-  hornet> erase 0x9F000000 +0x10000   
+  uboot> erase 0x9F000000 +0x10000   
 
   First 0x0 last 0x0 sector size 0x10000
   0
@@ -350,7 +267,7 @@ Configure adapter to use the following settings:
 10. Now your router does not have U-Boot, so do not wait and copy to FLASH the new one, stored earlier in RAM:
 
   ```
-  hornet> cp.b 0x80800000 0x9F000000 0x10000   
+  uboot> cp.b 0x80800000 0x9F000000 0x10000   
 
   Copy to Flash... write addr: 9f000000
   done
@@ -359,30 +276,31 @@ Configure adapter to use the following settings:
 11. If you want, you can check content of the newly written FLASH and compare it to the image on your PC (or better also do such a "legit memory content" comparison prior to writing!), using `md` command in U-Boot console, which prints indicated memory area (press only ENTER after first execution of this command to move further in memory):
 
   ```
-  hornet> md 0x9F000000
+  uboot> md 0x9F000000
 
-  9f000000: 100000ff 00000000 100000fd 00000000    ................
-  9f000010: 10000222 00000000 10000220 00000000    ..."....... ....
-  9f000020: 1000021e 00000000 1000021c 00000000    ................
-  9f000030: 1000021a 00000000 10000218 00000000    ................
-  9f000040: 10000216 00000000 10000214 00000000    ................
-  9f000050: 10000212 00000000 10000210 00000000    ................
-  9f000060: 1000020e 00000000 1000020c 00000000    ................
-  9f000070: 1000020a 00000000 10000208 00000000    ................
-  9f000080: 10000206 00000000 10000204 00000000    ................
-  9f000090: 10000202 00000000 10000200 00000000    ................
-  9f0000a0: 100001fe 00000000 100001fc 00000000    ................
-  9f0000b0: 100001fa 00000000 100001f8 00000000    ................
-  9f0000c0: 100001f6 00000000 100001f4 00000000    ................
-  9f0000d0: 100001f2 00000000 100001f0 00000000    ................
-  9f0000e0: 100001ee 00000000 100001ec 00000000    ................
-  9f0000f0: 100001ea 00000000 100001e8 00000000    ................
+9F000000: 100000FF 00000000 100000FD 00000000    ................
+9F000010: 1000018E 00000000 1000018C 00000000    ................
+9F000020: 1000018A 00000000 10000188 00000000    ................
+9F000030: 10000186 00000000 10000184 00000000    ................
+9F000040: 10000182 00000000 10000180 00000000    ................
+9F000050: 1000017E 00000000 1000017C 00000000    ...~.......|....
+9F000060: 1000017A 00000000 10000178 00000000    ...z.......x....
+9F000070: 10000176 00000000 10000174 00000000    ...v.......t....
+9F000080: 10000172 00000000 10000170 00000000    ...r.......p....
+9F000090: 1000016E 00000000 1000016C 00000000    ...n.......l....
+9F0000A0: 1000016A 00000000 10000168 00000000    ...j.......h....
+9F0000B0: 10000166 00000000 10000164 00000000    ...f.......d....
+9F0000C0: 10000162 00000000 10000160 00000000    ...b.......`....
+9F0000D0: 1000015E 00000000 1000015C 00000000    ...^.......\....
+9F0000E0: 1000015A 00000000 10000158 00000000    ...Z.......X....
+9F0000F0: 10000156 00000000 10000154 00000000    ...V.......T....
+
   ```
 
 12. If you are sure that everything went OK, you may reset the board:
 
   ```
-  hornet> reset
+  uboot> reset
   ```
 
 ### Using OpenWrt
@@ -406,18 +324,18 @@ Configure adapter to use the following settings:
 3. Transfer the new U-Boot image to the device:
 
   ```
-  me@laptop:~# scp uboot_for_tp-link_tl-mr3220_v2.bin root@192.168.1.1:/tmp/
-  uboot_for_tp-link_tl-mr3220_v2.bin            100%   64KB  64.0KB/s   00:00
+  me@laptop:~# scp uboot_for_antminer.bin root@192.168.1.1:/tmp/
+  uboot_for_antminer.bin            100%   64KB  64.0KB/s   00:00
   ```
 
 4. Verify the MD5 sum of the image:
 
   ```
-  me@laptop:~# md5sum uboot_for_tp-link_tl-mr3220_v2.bin
-  cefad12aa9fbd04291652dae3eb7650c  uboot_for_tp-link_tl-mr3220_v2.bin
+  me@laptop:~# md5sum uboot_for_antminer.bin
+  cefad12aa9fbd04291652dae3eb7650c  uboot_for_antminer.bin
 
-  root@OpenWrt:/tmp# md5sum uboot_for_tp-link_tl-mr3220_v2.bin
-  cefad12aa9fbd04291652dae3eb7650c  uboot_for_tp-link_tl-mr3220_v2.bin
+  root@OpenWrt:/tmp# md5sum uboot_for_tp-link_antminer.bin
+  cefad12aa9fbd04291652dae3eb7650c  uboot_for_antminer.bin
   ```
 
 5. Take a backup of the current u-boot partition (`mtd0`):
@@ -478,44 +396,16 @@ Configure adapter to use the following settings:
   root@OpenWrt:/tmp# reboot
   ```
 
-### Using DD-WRT
-
-[TODO]
-
-How to use it?
---------------
-
-[TODO]
-
 How to compile the code?
 ------------------------
-
-You can use one of the free toolchains:
-
-- [Sourcery CodeBench Lite Edition for MIPS GNU/Linux](https://sourcery.mentor.com/GNUToolchain/subscription3130?lite=MIPS),
-- [OpenWrt Toolchain for AR71xx MIPS](http://downloads.openwrt.org/attitude_adjustment/12.09/ar71xx/generic/OpenWrt-Toolchain-ar71xx-for-mips_r2-gcc-4.6-linaro_uClibc-0.9.33.2.tar.bz2),
-- [ELDK (Embedded Linux Development Kit)](ftp://ftp.denx.de/pub/eldk/),
-- or any others...
-
-I am using **Sourcery CodeBench Lite Edition for MIPS GNU/Linux** on **Ubuntu 12.04 LTS** (32-bit, virtual machine) and all released binary images were/will be built using this set.
-
-All you need to do, after choosing a toolchain, is to modify [Makefile](Makefile) - change or remove `export MAKECMD` and if needed add `export PATH`. For example, to use OpenWrt Toolchain instead of Sourcery CodeBench Lite, download it and extract into `toolchain` folder, inside the top dir and change first lines in [Makefile](Makefile):
-
-```
-export BUILD_TOPDIR=$(PWD)
-export STAGING_DIR=$(BUILD_TOPDIR)/tmp
-
-export MAKECMD=make --silent ARCH=mips CROSS_COMPILE=mips-openwrt-linux-uclibc-
-export PATH:=$(BUILD_TOPDIR)/toolchain/bin/:$(PATH)
-```
 
 To build image, run `make model` inside top dir, for example, command:
 
 ```
-make tplink_wr703n
+make antminer
 ```
 
-will start building U-Boot image for **TP-Link TL-WR703N**.
+will start building U-Boot image for the Bitmain Antminer.
 
 FAQ
 ---
