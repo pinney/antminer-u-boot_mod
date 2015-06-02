@@ -443,7 +443,7 @@ You should know, that most routers, especially those based on Atheros SoCs, uses
 
 Credits
 -------
-I Stand on the shoulders of giants.
+I stand upon the shoulders of giants.
 
 https://www.fsf.org/
 
