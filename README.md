@@ -443,8 +443,8 @@ You should know, that most routers, especially those based on Atheros SoCs, uses
 
 Credits
 -------
-I Stand on the shoulders of giants.
-https://www.fsf.org/
-https://kernel.org/
-http://www.denx.de/wiki/U-Boot/
+I Stand on the shoulders of giants. \\
+https://www.fsf.org/ \\
+https://kernel.org/ \\
+http://www.denx.de/wiki/U-Boot/ \\
 https://openwrt.org/
