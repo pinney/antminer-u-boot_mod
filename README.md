@@ -1,6 +1,6 @@
 U-Boot 1.1.4 modification for Antminer S1 & S3
-Forked from pepe2k's u-boot_mod @ commit 056fbad307bd67b62e7141f6b5e2ab68752f8972
 ==========
+Forked from pepe2k's u-boot_mod @ commit 056fbad307bd67b62e7141f6b5e2ab68752f8972
 
 Supported devices
 -----------------
