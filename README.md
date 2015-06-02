@@ -27,12 +27,13 @@ More information about supported devices:
 
 | Model | SoC | FLASH | RAM | U-Boot image | U-Boot env |
 |:--- | :--- | ---: | ---: | ---: | ---: |
-| [TP-Link TL-WR703N](http://wiki.openwrt.org/toh/tp-link/tl-wr703n) | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
-| [TP-Link TL-WR720N v3](http://wiki.openwrt.org/toh/tp-link/tl-wr720n) | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
-| [TP-Link TL-WR710N v1](http://wiki.openwrt.org/toh/tp-link/tl-wr710n) | AR9331 | 8 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
-| [TP-Link TL-WR740N v4](http://wiki.openwrt.org/toh/tp-link/tl-wr740n) | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
+| [Bitmain Antminer] | AR9331 | 8 MiB | 64 MiB DDR1 | 64 KiB, LZMA | RO |
+| [TP-Link TL-WR703N] | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
+| [TP-Link TL-WR720N v3] | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
+| [TP-Link TL-WR710N v1] | AR9331 | 8 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
+| [TP-Link TL-WR740N v4] | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
 | GS-Oolite/Elink EL-M150 module | AR9331 | 4/8/16 MiB | 64 MiB DDR2 | 64 KiB, LZMA | RO |
-| [D-Link DIR-505 H/W ver. A1](http://wiki.openwrt.org/toh/d-link/dir-505) | AR1311 | 8 MiB | 64 MiB DDR2 | 64 KiB, LZMA | RO |
+| [D-Link DIR-505 H/W ver. A1] | AR1311 | 8 MiB | 64 MiB DDR2 | 64 KiB, LZMA | RO |
 
 *(LZMA) - U-Boot binary image is compressed with LZMA.*  
 *(R/W) - environment exists in separate FLASH block which allows you to save it and keep after power down.*
