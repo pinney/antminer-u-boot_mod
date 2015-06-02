@@ -443,6 +443,8 @@ You should know, that most routers, especially those based on Atheros SoCs, uses
 
 Credits
 -------
-
-- Thanks to *pupie* from OpenWrt forum for his great help
-- Thanks for all donators and for users who contributed in code development
+I Stand on the shoulders of giants.
+https://www.fsf.org/
+https://kernel.org/
+http://www.denx.de/wiki/U-Boot/
+https://openwrt.org/
