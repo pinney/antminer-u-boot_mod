@@ -13,6 +13,8 @@ export CONFIG_BOOTDELAY=2
 # uncomment following line, to build RAM version images (without low level initialization)
 #export CONFIG_SKIP_LOWLEVEL_INIT=1
 
+all:	antminer tplink_wr703n tplink_wr720n_v3_CH tplink_wr710n tplink_wr740n_v4 dlink_dir505 gs-oolite_v1_dev
+
 antminer:	export UBOOT_FILE_NAME=uboot_for_antminer
 antminer:	export CONFIG_MAX_UBOOT_SIZE_KB=64
 ifndef CONFIG_SKIP_LOWLEVEL_INIT
