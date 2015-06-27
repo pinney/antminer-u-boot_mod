@@ -164,6 +164,11 @@ unsigned long flash_init(void){
 			puts("Spansion S25FL064P (8 MB)");
 			break;
 
+		case 0x014017:
+			flash_set_geom(SIZE_INBYTES_8MBYTES, 128, SIZE_INBYTES_64KBYTES);
+			puts("Spansion S25FL164K (8 MB)");
+			break;
+
 		case 0x1F4800:
 			flash_set_geom(SIZE_INBYTES_8MBYTES, 128, SIZE_INBYTES_64KBYTES);
 			puts("Atmel AT25DF641 (8 MB)");
@@ -188,6 +193,11 @@ unsigned long flash_init(void){
 		case 0xC22617:
 			flash_set_geom(SIZE_INBYTES_8MBYTES, 128, SIZE_INBYTES_64KBYTES);
 			puts("Macronix MX25L64 (8 MB)");
+			break;
+
+		case 0xC84018:
+			flash_set_geom(SIZE_INBYTES_8MBYTES, 128, SIZE_INBYTES_64KBYTES);
+			puts("GigaDevice GD25Q64 (8 MB)");
 			break;
 
 			/*
