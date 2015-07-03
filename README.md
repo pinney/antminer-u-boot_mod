@@ -116,7 +116,8 @@ Currently supported FLASH types:
 - Macronix MX25L320 (4 MiB, JEDEC ID: C2 2016)
 
 **8 MiB**:
-
+- GigaDevice GD25Q64B (8 MiB, JEDEC ID:0xc84017)
+- Spansion S25FL164K (8 MiB, JEDEC ID:0x014017)
 - Spansion S25FL064P (8 MiB, JEDEC ID: 01 0216)
 - Atmel AT25DF641 (8 MiB, JEDEC ID: 1F 4800)
 - EON EN25Q64 (8 MiB, JEDEC ID: 1C 3017)*

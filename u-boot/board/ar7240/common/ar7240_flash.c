@@ -195,9 +195,9 @@ unsigned long flash_init(void){
 			puts("Macronix MX25L64 (8 MB)");
 			break;
 
-		case 0xC84018:
+		case 0xC84017:
 			flash_set_geom(SIZE_INBYTES_8MBYTES, 128, SIZE_INBYTES_64KBYTES);
-			puts("GigaDevice GD25Q64 (8 MB)");
+			puts("GigaDevice GD25Q64B (8 MB)");
 			break;
 
 			/*
