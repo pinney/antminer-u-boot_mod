@@ -12,10 +12,11 @@ Currently supported devices:
   - Onion Omega
   - GS-Oolite/Elink EL-M150 module
   - TP-Link TL-WR703N v1
-  - TP-Link TL-WR720N v3 (version for Chinese market)
   - TP-Link TL-WR710N v1 (version for European market
+  - TP-Link TL-WR720N v3 (version for Chinese market)
   - TP-Link TL-WR740N v4 (and similar, like TL-WR741ND v4)
-	The Antminer shipped with hacked code from OpenWrt based on the WR741ND v4 and WR743ND
+	
+The Antminer shipped with hacked code from OpenWrt based on the WR741ND v4 and WR743ND
 
 - **Atheros AR1311 (similar to AR9331)**
   - D-Link DIR-505 H/W ver. A1
@@ -28,14 +29,14 @@ More information about supported devices:
 
 | Model | SoC | FLASH | RAM | U-Boot image | U-Boot env |
 |:--- | :--- | ---: | ---: | ---: | ---: |
-| [Bitmain Antminer] | AR9331 | 8 MiB | 64 MiB DDR2 | 64 KiB, LZMA | RO |
-| [Onion Omega] | AR9331 | 16 MiB | 64 MiB DDR2 | 64 KiB, LZMA | RO |
-| [TP-Link TL-WR703N] | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
-| [TP-Link TL-WR720N v3] | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
-| [TP-Link TL-WR710N v1] | AR9331 | 8 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
-| [TP-Link TL-WR740N v4] | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
+| Bitmain Antminer | AR9331 | 8 MiB | 64 MiB DDR2 | 64 KiB, LZMA | RO |
+| Onion Omega | AR9331 | 16 MiB | 64 MiB DDR2 | 64 KiB, LZMA | RO |
+| TP-Link TL-WR703N | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
+| TP-Link TL-WR720N v3 | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
+| TP-Link TL-WR710N v1 | AR9331 | 8 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
+| TP-Link TL-WR740N v4 | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
 | GS-Oolite/Elink EL-M150 module | AR9331 | 4/8/16 MiB | 64 MiB DDR2 | 64 KiB, LZMA | RO |
-| [D-Link DIR-505 H/W ver. A1] | AR1311 | 8 MiB | 64 MiB DDR2 | 64 KiB, LZMA | RO |
+| D-Link DIR-505 H/W ver. A1 | AR1311 | 8 MiB | 64 MiB DDR2 | 64 KiB, LZMA | RO |
 
 *(LZMA) - U-Boot binary image is compressed with LZMA.*  
 *(R/W) - environment exists in separate FLASH block which allows you to save it and keep after power down.*
@@ -405,10 +406,11 @@ How to compile the code?
 To build image, run `make model` inside top dir, for example, command:
 
 ```
-make antminer
-```
+`make all` will build U-Boot for all of the supported devices.
 
-will start building U-Boot image for the Bitmain Antminer.
+`make antminer` would build for U-Boot only for the antminers 
+
+```
 
 FAQ
 ---
