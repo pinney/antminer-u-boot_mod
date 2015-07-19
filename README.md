@@ -9,6 +9,7 @@ Currently supported devices:
 
 - **Atheros AR9331**:
   - Bitmain Antminer S1 and S3
+  - Onion Omega
   - GS-Oolite/Elink EL-M150 module
   - TP-Link TL-WR703N v1
   - TP-Link TL-WR720N v3 (version for Chinese market)
@@ -21,13 +22,14 @@ Currently supported devices:
 
 I tested this uboot along with OpenWrt trunk firmware on my S1.
 Flashing the bootloader is risky.
-If you like large expensive bricks proceed without caution.
+If you like expensive bricks proceed without caution.
 
 More information about supported devices:
 
 | Model | SoC | FLASH | RAM | U-Boot image | U-Boot env |
 |:--- | :--- | ---: | ---: | ---: | ---: |
-| [Bitmain Antminer] | AR9331 | 8 MiB | 64 MiB DDR1 | 64 KiB, LZMA | RO |
+| [Bitmain Antminer] | AR9331 | 8 MiB | 64 MiB DDR2 | 64 KiB, LZMA | RO |
+| [Onion Omega] | AR9331 | 16 MiB | 64 MiB DDR2 | 64 KiB, LZMA | RO |
 | [TP-Link TL-WR703N] | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
 | [TP-Link TL-WR720N v3] | AR9331 | 4 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
 | [TP-Link TL-WR710N v1] | AR9331 | 8 MiB | 32 MiB DDR1 | 64 KiB, LZMA | RO |
