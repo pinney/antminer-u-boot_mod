@@ -26,7 +26,7 @@ void led_toggle(void){
 	gpio ^= 1 << GPIO_SYS_LED_BIT;
 #elif defined(CONFIG_FOR_TPLINK_MR3040_V1V2)
 	gpio ^= 1 << GPIO_INTERNET_LED_BIT;
-#elif defined(CONFIG_FOR_ANTMINER)
+#elif defined(CONFIG_FOR_ANTMINER) || defined(CONFIG_FOR_OMEGA)
 	gpio ^= 1 << GPIO_SYS_LED_BIT;
 #elif defined(CONFIG_FOR_TPLINK_WR740N_V4) || defined(CONFIG_FOR_TPLINK_MR3220_V2)
 	gpio ^= 1 << GPIO_SYS_LED_BIT;
@@ -63,7 +63,7 @@ void all_led_on(void){
 	SETBITVAL(gpio, GPIO_INTERNET_LED_BIT, GPIO_INTERNET_LED_ON);
 	SETBITVAL(gpio, GPIO_WLAN_LED_BIT, GPIO_WLAN_LED_ON);
 	SETBITVAL(gpio, GPIO_ETH_LED_BIT, GPIO_ETH_LED_ON);
-#elif defined(CONFIG_FOR_ANTMINER)
+#elif defined(CONFIG_FOR_ANTMINER) || defined(CONFIG_FOR_OMEGA)
 	SETBITVAL(gpio, GPIO_SYS_LED_BIT, GPIO_SYS_LED_ON);
 #elif defined(CONFIG_FOR_TPLINK_WR740N_V4) || defined(CONFIG_FOR_TPLINK_MR3220_V2)
 	SETBITVAL(gpio, GPIO_SYS_LED_BIT, GPIO_SYS_LED_ON);
@@ -118,7 +118,7 @@ void all_led_off(void){
 	SETBITVAL(gpio, GPIO_INTERNET_LED_BIT, !GPIO_INTERNET_LED_ON);
 	SETBITVAL(gpio, GPIO_WLAN_LED_BIT, !GPIO_WLAN_LED_ON);
 	SETBITVAL(gpio, GPIO_ETH_LED_BIT, !GPIO_ETH_LED_ON);
-#elif defined(CONFIG_FOR_ANTMINER)
+#elif defined(CONFIG_FOR_ANTMINER) || defined(CONFIG_FOR_OMEGA)
 	SETBITVAL(gpio, GPIO_SYS_LED_BIT, !GPIO_SYS_LED_ON);
 #elif defined(CONFIG_FOR_TPLINK_WR740N_V4) || defined(CONFIG_FOR_TPLINK_MR3220_V2)
 	SETBITVAL(gpio, GPIO_SYS_LED_BIT, !GPIO_SYS_LED_ON);
@@ -269,6 +269,17 @@ void gpio_config(void){
 	 *
 	 * 0	=> WLAN
 	 * 23	=> SYS
+	 *
+	 */
+
+	/* set OE, added by zcf, 20110714 */
+	ar7240_reg_wr(AR7240_GPIO_OE, (ar7240_reg_rd(AR7240_GPIO_OE) | 0x8000000));
+#elif defined(CONFIG_FOR_OMEGA)
+
+	/* LED's GPIOs on OMEGA:
+	 *
+	 * 0	=> WLAN
+	 * 27	=> SYS
 	 *
 	 */
 

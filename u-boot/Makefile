@@ -329,7 +329,18 @@ antminer_config : unconfig hornet_common_config
 	@echo "#define GPIO_RST_BUTTON_BIT                 11" >> include/config.h
 	@echo "#define DEFAULT_FLASH_SIZE_IN_MB             8" >> include/config.h
 	@echo "#define BOARD_CUSTOM_STRING                  \"AP121 (AR9331) U-Boot for ANTMINER\"" >> include/config.h
+	
+	@./mkconfig -a ap121 mips mips ap121 ar7240 ar7240
 
+omega_config : unconfig hornet_common_config
+	@/bin/echo -e '\e[32m> Configuring for Onion Omega at:' `date` '\e[0m'
+	@echo "#define CONFIG_FOR_OMEGA                    1" >> include/config.h
+	@echo "#define GPIO_SYS_LED_BIT                    27" >> include/config.h
+	@echo "#define GPIO_SYS_LED_ON                      1" >> include/config.h
+	@echo "#define GPIO_RST_BUTTON_BIT                 11" >> include/config.h
+	@echo "#define DEFAULT_FLASH_SIZE_IN_MB             16" >> include/config.h
+	@echo "#define BOARD_CUSTOM_STRING                  \"AP121 (AR9331) U-Boot for Onion Omega\"" >> include/config.h
+        
 	@./mkconfig -a ap121 mips mips ap121 ar7240 ar7240
 
 wr703n_config : unconfig hornet_common_config
