@@ -1,4 +1,4 @@
-U-Boot 1.1.4 modification for Antminer S1 & S3
+U-Boot 1.1.4 modification for AR93xx Devices
 ==========
 Forked from pepe2k's u-boot_mod @ commit 056fbad307bd67b62e7141f6b5e2ab68752f8972
 
@@ -15,14 +15,13 @@ Currently supported devices:
   - TP-Link TL-WR710N v1 (version for European market
   - TP-Link TL-WR720N v3 (version for Chinese market)
   - TP-Link TL-WR740N v4 (and similar, like TL-WR741ND v4)
-	
-The Antminer shipped with hacked code from OpenWrt based on the WR741ND v4 and WR743ND
 
 - **Atheros AR1311 (similar to AR9331)**
   - D-Link DIR-505 H/W ver. A1
 
 I tested this uboot along with OpenWrt trunk firmware on my S1.
-Flashing the bootloader is risky.
+Onion Omega Software Team has also tested this uboot. \\ 
+Flashing the bootloader is risky. \\
 If you like expensive bricks proceed without caution.
 
 More information about supported devices:
@@ -110,31 +109,31 @@ Currently supported FLASH types:
 
 **4 MiB**:
 
-- Spansion S25FL032P (4 MiB, JEDEC ID: 01 0215)*
+- Spansion S25FL032P (4 MiB, JEDEC ID: 01 0215) !
 - Atmel AT25DF321 (4 MiB, JEDEC ID: 1F 4700)
-- EON EN25Q32 (4 MiB, JEDEC ID: 1C 3016)*
-- EON EN25F32 (4 MiB, JEDEC ID: 1C 3116)*
+- EON EN25Q32 (4 MiB, JEDEC ID: 1C 3016) !
+- EON EN25F32 (4 MiB, JEDEC ID: 1C 3116) !
 - Micron M25P32 (4 MiB, JEDEC ID: 20 2016)
 - Windbond W25Q32 (4 MiB, JEDEC ID: EF 4016)
 - Macronix MX25L320 (4 MiB, JEDEC ID: C2 2016)
 
 **8 MiB**:
-- GigaDevice GD25Q64B (8 MiB, JEDEC ID:0xc84017)
-- Spansion S25FL164K (8 MiB, JEDEC ID:0x014017)
+- GigaDevice GD25Q64B (8 MiB, JEDEC ID:0xc84017) !
+- Spansion S25FL164K (8 MiB, JEDEC ID:0x014017) !
 - Spansion S25FL064P (8 MiB, JEDEC ID: 01 0216)
 - Atmel AT25DF641 (8 MiB, JEDEC ID: 1F 4800)
-- EON EN25Q64 (8 MiB, JEDEC ID: 1C 3017)*
-- Micron M25P64 (8 MiB, JEDEC ID: 20 2017)
-- Windbond W25Q64 (8 MiB, JEDEC ID: EF 4017)*
+- EON EN25Q64 (8 MiB, JEDEC ID: 1C 3017) !
+- Micron M25P64 (8 MiB, JEDEC ID: 20 201)
+- Windbond W25Q64 (8 MiB, JEDEC ID: EF 4017) !
 - Macronix MX25L64 (8 MiB, JEDEC ID: C2 2017, C2 2617)
 
 **16 MiB**:
 
-- Winbond W25Q128 (16 MB, JEDEC ID: EF 4018)*
+- Winbond W25Q128 (16 MB, JEDEC ID: EF 4018) !
 - Macronix MX25L128 (16 MB, JEDEC ID: C2 2018, C2 2618)
-- Spansion S25FL127S (16 MB, JEDEC ID: 01 2018)*
+- Spansion S25FL127S (16 MB, JEDEC ID: 01 2018) !
 
-(*) tested
+(!) tested
 
 How to install it?
 ------------------
