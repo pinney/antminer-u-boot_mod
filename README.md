@@ -20,8 +20,11 @@ Currently supported devices:
   - D-Link DIR-505 H/W ver. A1
 
 I tested this uboot along with OpenWrt trunk firmware on my S1.
-Onion Omega Software Team has also tested this uboot. \\ 
-Flashing the bootloader is risky. \\
+
+Onion Omega Software Team has also tested this uboot.
+ 
+Flashing the bootloader is risky.
+
 If you like expensive bricks proceed without caution.
 
 More information about supported devices:
