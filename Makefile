@@ -29,6 +29,7 @@ antminer:
 
 omega:	export UBOOT_FILE_NAME=uboot_for_omega
 omega:	export CONFIG_MAX_UBOOT_SIZE_KB=64
+omega:	export DEVICE_VENDOR=onion
 ifndef CONFIG_SKIP_LOWLEVEL_INIT
 omega:	export COMPRESSED_UBOOT=1
 endif
