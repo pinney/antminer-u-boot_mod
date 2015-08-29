@@ -26,7 +26,7 @@
 #include <ar7240_soc.h>
 #include "../board/ar7240/common/ar7240_flash.h"
 
-extern void ar7240_sys_frequency(u32 *cpu_freq, u32 *ddr_freq, u32 *ahb_freq);
+extern void ar933x_sys_frequency(u32 *cpu_freq, u32 *ddr_freq, u32 *ahb_freq);
 
 #if defined(OFFSET_MAC_ADDRESS)
 /*
@@ -197,34 +197,45 @@ U_BOOT_CMD(startsc, 1, 0, do_start_sc, "start serial console\n", NULL);
 
 #endif /* if defined(CONFIG_NETCONSOLE) */
 
-#if defined(CONFIG_FOR_8DEVICES_CARAMBOLA2) || \
-    defined(CONFIG_FOR_DRAGINO_V2)          || \
-    defined(CONFIG_FOR_MESH_POTATO_V2)
+#if !defined(CONFIG_FOR_DLINK_DIR505_A1)
 /*
  * Erase environment sector
  */
 int do_default_env(cmd_tbl_t * cmdtp, int flag, int argc, char *argv[]){
 	int	rc, rcode = 0;
+	int len;
+	ulong end_addr, flash_sect_addr;
 #if defined(CFG_ENV_SECT_SIZE) && (CFG_ENV_SECT_SIZE > CFG_ENV_SIZE)
+	ulong flash_offset;
 	unsigned char env_buffer[CFG_ENV_SECT_SIZE];
 #endif
 
 #if defined(CFG_ENV_SECT_SIZE) && (CFG_ENV_SECT_SIZE > CFG_ENV_SIZE)
+	flash_offset    = CFG_ENV_ADDR & (CFG_ENV_SECT_SIZE-1);
+	flash_sect_addr = CFG_ENV_ADDR & ~(CFG_ENV_SECT_SIZE-1);
+
 	/* copy whole env sector to temporary buffer */
-	memcpy(env_buffer, (void *)CFG_ENV_ADDR, CFG_ENV_SECT_SIZE);
+	memcpy(env_buffer, (void *)flash_sect_addr, CFG_ENV_SECT_SIZE);
 
 	/* clear env part */
-	memset(env_buffer, 0xFF, CFG_ENV_SIZE);
+	memset((uchar *)((unsigned long)env_buffer + flash_offset), 0xFF, CFG_ENV_SIZE);
+
+	len	 = CFG_ENV_SECT_SIZE;
+#else
+	flash_sect_addr = CFG_ENV_ADDR;
+	len = CFG_ENV_SIZE;
 #endif
 
+	end_addr = flash_sect_addr + len - 1;
+
 	/* erase whole env sector */
-	if(flash_sect_erase(CFG_ENV_ADDR, CFG_ENV_ADDR + CFG_ENV_SECT_SIZE - 1)){
+	if(flash_sect_erase(flash_sect_addr, end_addr)){
 		rcode = 1;
 	}
 
 #if defined(CFG_ENV_SECT_SIZE) && (CFG_ENV_SECT_SIZE > CFG_ENV_SIZE)
 	/* restore data from buffer in FLASH */
-	rc = flash_write((char *)env_buffer, CFG_ENV_ADDR, CFG_ENV_SECT_SIZE);
+	rc = flash_write((char *)env_buffer, flash_sect_addr, len);
 
 	if(rc != 0){
 		flash_perror(rc);
@@ -236,7 +247,7 @@ int do_default_env(cmd_tbl_t * cmdtp, int flag, int argc, char *argv[]){
 }
 
 U_BOOT_CMD(defenv, 1, 0, do_default_env, "reset environment variables to their default values\n", NULL);
-#endif /* if defined(CONFIG_FOR_8DEVICES_CARAMBOLA2) || defined(CONFIG_FOR_DRAGINO_V2) || defined(CONFIG_FOR_MESH_POTATO_V2) */
+#endif /* if !defined(CONFIG_FOR_DLINK_DIR505_A1) */
 
 #if defined(PLL_IN_FLASH_MAGIC_OFFSET)
 
@@ -547,7 +558,7 @@ int do_set_clocks(cmd_tbl_t * cmdtp, int flag, int argc, char *argv[]){
 	if(argc == 1){
 
 		// read clocks
-		ar7240_sys_frequency(&cpu_freq, &ddr_freq, &ahb_freq);
+		ar933x_sys_frequency(&cpu_freq, &ddr_freq, &ahb_freq);
 
 		// calculate SPI clock (we need to set bit 0 to 1 in SPI_FUNC_SELECT to access SPI registers)
 		ar7240_reg_wr(AR7240_SPI_FS, 0x01);
@@ -661,7 +672,7 @@ U_BOOT_CMD(setclk, 2, 0, do_set_clocks, "select clocks configuration from predef
 		"index\n"
 		"\t- save 'index' configuration in FLASH\n"
 		"setclk\n"
-		"\t- prints available clocks configurations and current settings");
+		"\t- prints available clocks configurations and current settings\n");
 
 /*
  * Remove (clear) PLL and clock settings in FLASH
