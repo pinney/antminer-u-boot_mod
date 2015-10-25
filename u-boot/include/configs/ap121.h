@@ -132,7 +132,7 @@
 #undef	CPU_PLL_CONFIG_VAL
 #undef	CPU_CLK_CONTROL_VAL
 
-// CPU-RAM-AHB frequency setting
+// CPU-RAM-AHB set clocks HERE
 #ifndef CFG_PLL_FREQ
 	#define CFG_PLL_FREQ    CFG_PLL_400_400_200
 #endif
