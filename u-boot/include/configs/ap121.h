@@ -762,11 +762,9 @@
 /*
  * Address and size of Primary Environment Sector
  */
-#if defined(CONFIG_FOR_8DEVICES_CARAMBOLA2) || \
-	defined(CONFIG_FOR_DRAGINO_V2) || \
-	defined(CONFIG_FOR_MESH_POTATO_V2)
-	#define	CFG_ENV_IS_IN_FLASH	1
-	#undef CFG_ENV_IS_NOWHERE
+#if !defined(CONFIG_FOR_DLINK_DIR505_A1)
+	#define CFG_ENV_IS_IN_FLASH	1
+	#undef  CFG_ENV_IS_NOWHERE
 #else
 	#undef  CFG_ENV_IS_IN_FLASH
 	#define CFG_ENV_IS_NOWHERE	1
@@ -782,8 +780,9 @@
 	#define CFG_ENV_SIZE		0x8000
 	#define CFG_ENV_SECT_SIZE	0x10000
 #else
-	#define CFG_ENV_ADDR		0x9F040000
-	#define CFG_ENV_SIZE		0x10000
+	#define CFG_ENV_ADDR		0x9F01EC00
+	#define CFG_ENV_SIZE		0x1000
+	#define CFG_ENV_SECT_SIZE	0x10000
 #endif
 
 /*
@@ -792,7 +791,6 @@
 #if defined(CONFIG_FOR_DLINK_DIR505_A1)
 
 	#define CONFIG_COMMANDS (CFG_CMD_MEMORY | \
-							 CFG_CMD_DHCP   | \
 							 CFG_CMD_PING   | \
 							 CFG_CMD_FLASH  | \
 							 CFG_CMD_NET    | \
@@ -819,7 +817,8 @@
 							 CFG_CMD_BOOTD  | \
 							 CFG_CMD_ITEST  | \
 							 CFG_CMD_IMI    | \
-							 CFG_CMD_ENV)
+							 CFG_CMD_ENV    | \
+							 CFG_CMD_LOADB)
 
 #else
 
@@ -830,9 +829,12 @@
 							 CFG_CMD_NET    | \
 							 CFG_CMD_RUN    | \
 							 CFG_CMD_DATE   | \
+							 CFG_CMD_SNTP   | \
 							 CFG_CMD_ECHO   | \
 							 CFG_CMD_BOOTD  | \
-							 CFG_CMD_ITEST)
+							 CFG_CMD_ITEST  | \
+							 CFG_CMD_ENV    | \
+							 CFG_CMD_LOADB)
 
 #endif
 
@@ -885,13 +887,18 @@
 
 #if defined(CONFIG_FOR_DLINK_DIR505_A1)
 	#define UPDATE_SCRIPT_UBOOT_SIZE_IN_BYTES			"0x10000"
+	#define UPDATE_SCRIPT_UBOOT_BACKUP_SIZE_IN_BYTES	UPDATE_SCRIPT_UBOOT_SIZE_IN_BYTES
 #elif defined(CONFIG_FOR_8DEVICES_CARAMBOLA2)
 	#define UPDATE_SCRIPT_UBOOT_SIZE_IN_BYTES			"0x40000"
+	#define UPDATE_SCRIPT_UBOOT_BACKUP_SIZE_IN_BYTES	UPDATE_SCRIPT_UBOOT_SIZE_IN_BYTES
 #elif defined(CONFIG_FOR_DRAGINO_V2) || \
       defined(CONFIG_FOR_MESH_POTATO_V2)
 	#define UPDATE_SCRIPT_UBOOT_SIZE_IN_BYTES			"0x30000"
+	#define UPDATE_SCRIPT_UBOOT_BACKUP_SIZE_IN_BYTES	UPDATE_SCRIPT_UBOOT_SIZE_IN_BYTES
 #else
-	#define UPDATE_SCRIPT_UBOOT_SIZE_IN_BYTES			"0x10000"
+	// TODO: should be == CONFIG_MAX_UBOOT_SIZE_KB
+	#define UPDATE_SCRIPT_UBOOT_SIZE_IN_BYTES			"0x1EC00"
+	#define UPDATE_SCRIPT_UBOOT_BACKUP_SIZE_IN_BYTES	"0x20000"
 #endif
 
 // Firmware partition offset
@@ -952,18 +959,21 @@
 #define CONFIG_EXTRA_ENV_SETTINGS	"uboot_addr=0x9F000000\0" \
 									"uboot_name=uboot.bin\0" \
 									"uboot_size=" UPDATE_SCRIPT_UBOOT_SIZE_IN_BYTES "\0" \
+									"uboot_backup_size=" UPDATE_SCRIPT_UBOOT_BACKUP_SIZE_IN_BYTES "\0" \
 									"uboot_upg=" \
 										"if ping $serverip; then " \
+											"mw.b $loadaddr 0xFF $uboot_backup_size && " \
+											"cp.b $uboot_addr $loadaddr $uboot_backup_size && " \
 											"tftp $loadaddr $uboot_name && " \
-											"if itest.l $filesize == $uboot_size; then " \
-												"erase $uboot_addr +$filesize && " \
-												"cp.b $loadaddr $uboot_addr $filesize && " \
+											"if itest.l $filesize <= $uboot_size; then " \
+												"erase $uboot_addr +$uboot_backup_size && " \
+												"cp.b $loadaddr $uboot_addr $uboot_backup_size && " \
 												"echo OK!; " \
 											"else " \
 												"echo ERROR! Wrong file size!; " \
 											"fi; " \
 										"else " \
-											"ERROR! Server not reachable!; " \
+											"echo ERROR! Server not reachable!; " \
 										"fi\0" \
 									"firmware_addr=" UPDATE_SCRIPT_FW_ADDR "\0" \
 									"firmware_name=firmware.bin\0" \
@@ -974,7 +984,7 @@
 											"cp.b $loadaddr $firmware_addr $filesize && " \
 											"echo OK!; " \
 										"else " \
-											"ERROR! Server not reachable!; " \
+											"echo ERROR! Server not reachable!; " \
 										"fi\0" \
 									SILENT_ENV_VARIABLE
 
